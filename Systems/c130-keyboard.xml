@@ -35,6 +35,9 @@
     <binding>
       <command>property-toggle</command>
       <property>controls/engines/engine[0]/reverser</property>
+      <property>controls/engines/engine[1]/reverser</property>
+      <property>controls/engines/engine[2]/reverser</property>
+      <property>controls/engines/engine[3]/reverser</property>
     </binding>
     <binding>
       <command>nasal</command>
