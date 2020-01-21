@@ -412,10 +412,10 @@ refs 4
 20 0.238386765122 0.088859274983
 kids 0
 OBJECT poly
-name "buttonCRS"
+name "buttonHDG"
 loc 0 0 -0
 data 9
-buttonCRS
+buttonHDG
 texture "hsi.png"
 texrep 1.000000 1.000000
 crease 180.000005
@@ -904,10 +904,10 @@ refs 4
 63 0.136025428772 0.483150005341
 kids 0
 OBJECT poly
-name "buttonHDG"
+name "buttonCRS"
 loc 0 0 -0
 data 9
-buttonHDG
+buttonCRS
 texture "hsi.png"
 texrep 1.000000 1.000000
 crease 180.000005

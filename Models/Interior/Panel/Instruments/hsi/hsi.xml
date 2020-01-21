@@ -337,9 +337,11 @@
   </animation>
 
   <animation>
-    <type>rotate</type>
-    <object-name>buttonCRS</object-name>
-    <property>instrumentation/nav[0]/radials/selected-deg</property>
+    <type>knob</type>
+    <object-name>buttonHDG</object-name>
+    <!-- <property>instrumentation/nav[0]/radials/selected-deg</property> -->
+    <!-- <property>instrumentation/heading-indicator/heading-bug-deg</property> -->
+    <property>autopilot/settings/heading-bug-deg</property>
     <center>
       <x-m>  0.007 </x-m>
       <y-m> -0.048 </y-m>
@@ -350,22 +352,58 @@
       <y>  0 </y>
       <z>  0 </z>
     </axis>
+    <action>
+      <binding>
+        <command>property-adjust</command>
+        <property>autopilot/settings/heading-bug-deg</property>
+        <min>0</min>
+        <max>359</max>
+        <wrap>true</wrap>
+        <factor>1</factor>
+      </binding>
+    </action>
+    <hovered>
+      <binding>
+        <command>set-tooltip</command>
+        <label>Heading: %03d</label>
+        <tooltip-id>heading</tooltip-id>
+        <property>autopilot/settings/heading-bug-deg</property>
+      </binding>
+    </hovered>
   </animation>
 
   <animation>
-   <type>rotate</type>
-   <object-name>buttonHDG</object-name>
-   <property>instrumentation/heading-indicator/offset-deg</property>
-   <center>
+    <type>knob</type>
+    <object-name>buttonCRS</object-name>
+    <property>instrumentation/nav[0]/radials/selected-deg</property>
+    <center>
       <x-m>  0.007 </x-m>
-      <y-m> -0.048 </y-m>
+      <y-m>  0.048 </y-m>
       <z-m> -0.050 </z-m>
-   </center>
-   <axis>
-     <x> -1 </x>
-     <y>  0 </y>
-     <z>  0 </z>
-   </axis>
+    </center>
+    <axis>
+      <x> -1 </x>
+      <y>  0 </y>
+      <z>  0 </z>
+    </axis>
+    <action>
+      <binding>
+        <command>property-adjust</command>
+        <property>instrumentation/nav[0]/radials/selected-deg</property>
+        <min>0</min>
+        <max>359</max>
+        <wrap>true</wrap>
+        <factor>1</factor>
+      </binding>
+    </action>
+    <hovered>
+      <binding>
+        <command>set-tooltip</command>
+        <label>CRS: %03d</label>
+        <tooltip-id>nav1-course</tooltip-id>
+        <property>instrumentation/nav[0]/radials/selected-deg</property>
+      </binding>
+    </hovered>
   </animation>
 
 </PropertyList>
