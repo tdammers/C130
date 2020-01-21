@@ -31,7 +31,7 @@
     <object-name>pal4</object-name>
     <condition>
       <less-than>
-        <property>fdm/jsbsim/propulsion/engine[0]/engine-rpm</property>
+        <property>engines/engine[3]/rpm</property>
         <value>1000</value>
       </less-than>
     </condition>
@@ -91,7 +91,7 @@
     <object-name>propdisc</object-name>
     <condition>
       <greater-than>
-        <property>fdm/jsbsim/propulsion/engine[0]/engine-rpm</property>
+        <property>engines/engine[3]/rpm</property>
         <value>1000</value>
       </greater-than>
     </condition>
@@ -103,11 +103,11 @@
     <condition>
       <and>
         <greater-than>
-          <property>fdm/jsbsim/propulsion/engine[0]/engine-rpm</property>
+          <property>engines/engine[3]/rpm</property>
           <value>400.000</value>
         </greater-than>
         <less-than>
-          <property>fdm/jsbsim/propulsion/engine[0]/engine-rpm</property>
+          <property>engines/engine[3]/rpm</property>
           <value>1000.001</value>
         </less-than>
       </and>
@@ -118,7 +118,7 @@
   <animation>
     <type>spin</type>
     <object-name>heliceD</object-name>
-    <property>fdm/jsbsim/propulsion/engine[0]/engine-rpm</property>
+    <property>engines/engine[3]/rpm</property>
     <factor> -0.479 </factor>
     <axis>
       <x> 1 </x>
