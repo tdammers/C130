@@ -257,7 +257,9 @@
 
   <!-- Les hélices --> 
   <model>
-    <path>Aircraft/C130/Models/Propellers/propeller1.xml</path>
+    <path>Aircraft/C130/Models/Propellers/propeller.xml</path>
+    <overlay><params><rpm>engines/engine[0]/rpm</rpm></params></overlay>
+    <overlay><params><pitch>engines/engine[0]/propeller-pitch</pitch></params></overlay>
     <offsets>
       <x-m> -3.764 </x-m>
       <y-m> -9.821 </y-m>
@@ -266,7 +268,9 @@
   </model>
 
   <model>
-    <path>Aircraft/C130/Models/Propellers/propeller2.xml</path>
+    <path>Aircraft/C130/Models/Propellers/propeller.xml</path>
+    <overlay><params><rpm>engines/engine[1]/rpm</rpm></params></overlay>
+    <overlay><params><pitch>engines/engine[1]/propeller-pitch</pitch></params></overlay>
     <offsets> 
       <x-m> -3.764 </x-m>
       <y-m> -4.926 </y-m>
@@ -275,7 +279,9 @@
   </model>
 
   <model>
-    <path>Aircraft/C130/Models/Propellers/propeller3.xml</path>
+    <path>Aircraft/C130/Models/Propellers/propeller.xml</path>
+    <overlay><params><rpm>engines/engine[2]/rpm</rpm></params></overlay>
+    <overlay><params><pitch>engines/engine[2]/propeller-pitch</pitch></params></overlay>
     <offsets>
       <x-m> -3.764 </x-m>
       <y-m>  4.926 </y-m>
@@ -284,7 +290,9 @@
   </model>
 
   <model>
-    <path>Aircraft/C130/Models/Propellers/propeller4.xml</path>
+    <path>Aircraft/C130/Models/Propellers/propeller.xml</path>
+    <overlay><params><rpm>engines/engine[3]/rpm</rpm></params></overlay>
+    <overlay><params><pitch>engines/engine[3]/propeller-pitch</pitch></params></overlay>
     <offsets>
       <x-m> -3.764 </x-m>
       <y-m>  9.821 </y-m>
