@@ -90,4 +90,38 @@
     </axis>
   </animation>
 
+  <animation>
+    <type>knob</type>
+    <object-name>button</object-name>
+    <property>/instrumentation/altimeter/setting-inhg</property>
+    <axis>
+      <x>-1</x>
+      <y>0</y>
+      <z>0</z>
+    </axis>
+    <center>
+      <x-m>0</x-m>
+      <y-m>-0.028594</y-m>
+      <z-m>-0.027738</z-m>
+    </center>
+    <action>
+      <binding>
+        <command>property-adjust</command>
+        <property>/instrumentation/altimeter/setting-inhg</property>
+        <min>28.0</min>
+        <max>31.0</max>
+        <wrap>false</wrap>
+        <factor>0.01</factor>
+      </binding>
+    </action>
+    <hovered>
+      <binding>
+        <command>set-tooltip</command>
+        <label>QNH: %2.2f</label>
+        <tooltip-id>qnh</tooltip-id>
+        <property>/instrumentation/altimeter/setting-inhg</property>
+      </binding>
+    </hovered>
+  </animation>
+
 </PropertyList>
