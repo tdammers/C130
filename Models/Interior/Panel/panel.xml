@@ -252,7 +252,8 @@
 
   <!-- Tachimètre -->
   <model>
-    <path>Aircraft/C130/Models/Interior/Panel/Instruments/tachimeter/tachimeter1.xml</path>
+    <path>Aircraft/C130/Models/Interior/Panel/Instruments/tachimeter/tachimeter.xml</path>
+    <overlay><params><rpm>engines/engine[0]/rpm</rpm></params></overlay>
     <offsets>
       <x-m> -0.325 </x-m>
       <y-m> -0.114 </y-m>
@@ -261,7 +262,8 @@
   </model>
 
   <model>
-    <path>Aircraft/C130/Models/Interior/Panel/Instruments/tachimeter/tachimeter2.xml</path>
+    <path>Aircraft/C130/Models/Interior/Panel/Instruments/tachimeter/tachimeter.xml</path>
+    <overlay><params><rpm>/engines/engine[1]/rpm</rpm></params></overlay>
     <offsets>
       <x-m> -0.325 </x-m>
       <y-m> -0.038 </y-m>
@@ -270,7 +272,8 @@
   </model>
 
   <model>
-    <path>Aircraft/C130/Models/Interior/Panel/Instruments/tachimeter/tachimeter3.xml</path>
+    <path>Aircraft/C130/Models/Interior/Panel/Instruments/tachimeter/tachimeter.xml</path>
+    <overlay><params><rpm>/engines/engine[2]/rpm</rpm></params></overlay>
     <offsets>
       <x-m> -0.325 </x-m>
       <y-m>  0.038 </y-m>
@@ -279,7 +282,8 @@
   </model>
 
   <model>
-    <path>Aircraft/C130/Models/Interior/Panel/Instruments/tachimeter/tachimeter4.xml</path>
+    <path>Aircraft/C130/Models/Interior/Panel/Instruments/tachimeter/tachimeter.xml</path>
+    <overlay><params><rpm>/engines/engine[3]/rpm</rpm></params></overlay>
     <offsets>
       <x-m> -0.325 </x-m>
       <y-m>  0.114 </y-m>

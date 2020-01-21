@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <PropertyList>
+  <params>
+    <rpm>/engines/engine/rpm</rpm>
+  </params>
 
   <path>tachimeter.ac</path>
 
@@ -33,7 +36,7 @@
   <animation>
     <type>rotate</type>
     <object-name>needle</object-name>
-    <property>/engines/engine[2]/rpm</property>
+    <property alias="../../params/rpm"/>
     <min>0</min>
     <max>4500</max>
     <interpolation>
