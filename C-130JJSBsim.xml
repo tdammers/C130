@@ -47,7 +47,7 @@
    <vtailarea unit="FT2">  313.56 </vtailarea>
    <vtailarm  unit="FT" >   48.95 </vtailarm>
    <location name="AERORP" unit="IN">
-     <x> 0.00 </x>
+     <x> -10.00 </x>
      <y>   0.00 </y>
      <z>   0.00 </z>
    </location>
@@ -57,7 +57,7 @@
      <z>  65.00 </z>
    </location>
    <location name="VRP" unit="IN">
-     <x>0</x>
+     <x> -516.42</x>
      <y>0</y>
      <z>0</z>
    </location>
