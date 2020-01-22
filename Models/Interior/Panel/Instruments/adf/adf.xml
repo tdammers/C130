@@ -31,6 +31,7 @@
     </emission>
   </animation>
 
+  <!--
   <animation>
     <type>rotate</type>
     <object-name>face</object-name>
@@ -38,6 +39,18 @@
     <factor>-1</factor>
     <axis>
       <x> -1 </x>
+      <y>  0 </y>
+      <z>  0 </z>
+    </axis>
+  </animation>
+  -->
+
+  <animation>
+    <type>rotate</type>
+    <object-name>needle</object-name>
+    <property>/instrumentation/heading-indicator/indicated-heading-deg</property>
+    <axis>
+      <x>  1 </x>
       <y>  0 </y>
       <z>  0 </z>
     </axis>
@@ -52,6 +65,35 @@
       <y>  0 </y>
       <z>  0 </z>
     </axis>
+  </animation>
+
+  <animation>
+    <type>knob</type>
+    <object-name>face</object-name>
+    <property>instrumentation/heading-indicator/indicated-heading-deg</property>
+    <axis>
+      <x>  1 </x>
+      <y>  0 </y>
+      <z>  0 </z>
+    </axis>
+    <action>
+      <binding>
+        <command>property-adjust</command>
+        <property>instrumentation/heading-indicator/offset-deg</property>
+        <min>0</min>
+        <max>359</max>
+        <wrap>true</wrap>
+        <factor>1</factor>
+      </binding>
+    </action>
+    <hovered>
+      <binding>
+        <command>set-tooltip</command>
+        <label>Heading: %03d</label>
+        <tooltip-id>heading</tooltip-id>
+        <property>instrumentation/heading-indicator/indicated-heading-deg</property>
+      </binding>
+    </hovered>
   </animation>
 
 </PropertyList>
