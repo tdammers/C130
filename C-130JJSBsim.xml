@@ -47,17 +47,17 @@
    <vtailarea unit="FT2">  313.56 </vtailarea>
    <vtailarm  unit="FT" >   48.95 </vtailarm>
    <location name="AERORP" unit="IN">
-     <x> -10.00 </x>
+     <x> 610.40 </x>
      <y>   0.00 </y>
      <z>   0.00 </z>
    </location>
    <location name="EYEPOINT" unit="IN">
-     <x> -516.42 </x>
+     <x> 593.98 </x>
      <y> -24.00 </y>
      <z>  65.00 </z>
    </location>
    <location name="VRP" unit="IN">
-     <x> -516.42</x>
+     <x>590</x>
      <y>0</y>
      <z>0</z>
    </location>
@@ -69,7 +69,7 @@
    <izz unit="SLUG*FT2">   1722828 </izz>
    <emptywt unit="LBS" >     75562 </emptywt>
    <location name="CG" unit="IN">
-     <x> -10.00 </x>
+     <x> 600.40 </x>
      <y>   0.00 </y>
      <z> -29.37 </z>
    </location>
@@ -77,7 +77,7 @@
     <description> 40068 LBS + full (39370 LBS) fuel should bring model up to entered max weight</description>
     <weight unit="LBS">  0 </weight>
     <location name="POINTMASS" unit="IN">
-      <x> -10.00 </x>
+      <x> 600.40 </x>
       <y>   0.00 </y>
       <z> -29.37 </z>
     </location>
@@ -88,12 +88,12 @@
 
   <contact type="BOGEY" name="NOSE">
    <location unit="IN">
-     <x> -457.68 </x>
+     <x> 152.72 </x>
      <y>   0.00 </y>
      <z> -41.98 </z>
    </location>
-   <static_friction>  0.80 </static_friction>
-   <dynamic_friction> 0.50 </dynamic_friction>
+   <static_friction>  2.40 </static_friction>
+   <dynamic_friction> 2.00 </dynamic_friction>
    <rolling_friction> 0.05 </rolling_friction>
    <spring_coeff unit="LBS/FT">      46500.00 </spring_coeff>
    <damping_coeff unit="LBS/FT/SEC"> 77500.00 </damping_coeff>
@@ -104,12 +104,12 @@
 
   <contact type="BOGEY" name="LEFT_MAIN">
    <location unit="IN">
-     <x> 0.50 </x>
+     <x> 610.90 </x>
      <y> -175.16 </y>
      <z> -39.98 </z>
    </location>
-   <static_friction>  0.80 </static_friction>
-   <dynamic_friction> 0.50 </dynamic_friction>
+   <static_friction>  2.40 </static_friction>
+   <dynamic_friction> 2.00 </dynamic_friction>
    <rolling_friction> 0.02 </rolling_friction>
    <spring_coeff unit="LBS/FT">      155000.00 </spring_coeff>
    <damping_coeff unit="LBS/FT/SEC"> 77500.00 </damping_coeff>
@@ -120,12 +120,12 @@
 
   <contact type="BOGEY" name="RIGHT_MAIN">
    <location unit="IN">
-     <x> 0.50 </x>
+     <x> 610.90 </x>
      <y> 175.16 </y>
      <z> -39.98 </z>
    </location>
-   <static_friction>  0.80 </static_friction>
-   <dynamic_friction> 0.50 </dynamic_friction>
+   <static_friction>  2.40 </static_friction>
+   <dynamic_friction> 2.00 </dynamic_friction>
    <rolling_friction> 0.02 </rolling_friction>
    <spring_coeff unit="LBS/FT">      155000.00 </spring_coeff>
    <damping_coeff unit="LBS/FT/SEC"> 77500.00 </damping_coeff>
@@ -136,7 +136,7 @@
 
   <contact type="STRUCTURE" name="LEFT_WING">
     <location unit="IN">
-     <x> -10.00 </x>
+     <x> 600.40 </x>
      <y> -66.35 </y>
      <z> -29.37 </z>
     </location>
@@ -148,7 +148,7 @@
 
   <contact type="STRUCTURE" name="RIGHT_WING">
     <location unit="IN">
-     <x> -10.00 </x>
+     <x> 600.40 </x>
      <y>  66.35 </y>
      <z> -29.37 </z>
     </location>
@@ -164,7 +164,7 @@
 
    <engine file="AE2100D3">
     <location unit="IN">
-      <x> -10.00 </x>
+      <x> 600.40 </x>
       <y> -265.40 </y>
       <z> -40.00 </z>
     </location>
@@ -177,7 +177,7 @@
     <feed>4</feed>
     <thruster file="R391">
      <location unit="IN">
-       <x> -10.00 </x>
+       <x> 600.40 </x>
        <y> -265.40 </y>
        <z> -40.00 </z>
      </location>
@@ -191,7 +191,7 @@
 
    <engine file="AE2100D3">
     <location unit="IN">
-      <x> 0.00 </x>
+      <x> 610.40 </x>
       <y> -265.40 </y>
       <z> -40.00 </z>
     </location>
@@ -204,7 +204,7 @@
     <feed>4</feed>
     <thruster file="R391">
      <location unit="IN">
-       <x> 0.00 </x>
+       <x> 610.40 </x>
        <y> -265.40 </y>
        <z> -40.00 </z>
      </location>
@@ -218,7 +218,7 @@
 
    <engine file="AE2100D3">
     <location unit="IN">
-      <x> 0.00 </x>
+      <x> 610.40 </x>
       <y> 265.40 </y>
       <z> -40.00 </z>
     </location>
@@ -231,7 +231,7 @@
     <feed>4</feed>
     <thruster file="R391">
      <location unit="IN">
-       <x> -550.00 </x>
+       <x> 60.40 </x>
        <y> 265.40 </y>
        <z> -40.00 </z>
      </location>
@@ -245,7 +245,7 @@
 
    <engine file="AE2100D3">
     <location unit="IN">
-      <x> 0.00 </x>
+      <x> 610.40 </x>
       <y> 265.40 </y>
       <z> -40.00 </z>
     </location>
@@ -272,7 +272,7 @@
 
   <tank type="FUEL" number="0">
      <location unit="IN">
-       <x> -10.00 </x>
+       <x> 600.40 </x>
        <y>   0.00 </y>
        <z> -29.37 </z>
      </location>
@@ -282,7 +282,7 @@
 
   <tank type="FUEL" number="1">
      <location unit="IN">
-       <x> -10.00 </x>
+       <x> 600.40 </x>
        <y>   0.00 </y>
        <z> -29.37 </z>
      </location>
@@ -292,7 +292,7 @@
 
   <tank type="FUEL" number="2">
      <location unit="IN">
-       <x> -10.00 </x>
+       <x> 600.40 </x>
        <y>   0.00 </y>
        <z> -29.37 </z>
      </location>
@@ -302,7 +302,7 @@
 
   <tank type="FUEL" number="3">
      <location unit="IN">
-       <x> -10.00 </x>
+       <x> 600.40 </x>
        <y>   0.00 </y>
        <z> -29.37 </z>
      </location>
@@ -312,7 +312,7 @@
 
   <tank type="FUEL" number="4">
      <location unit="IN">
-       <x> -10.00 </x>
+       <x> 600.40 </x>
        <y>   0.00 </y>
        <z> -29.37 </z>
      </location>
