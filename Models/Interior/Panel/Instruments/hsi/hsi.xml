@@ -192,6 +192,11 @@
     <object-name>HDGneedle2</object-name>
     <object-name>heading-bug</object-name>
     <property>orientation/heading-deg</property>
+    <center>
+      <y-m>-0.0007755 </y-m>
+      <z-m> 0.0026305 </z-m>
+      <x-m> 0.0000000 </x-m>
+    </center>
     <axis>
       <x> 1 </x>
       <y> 0 </y>
@@ -208,12 +213,7 @@
         <value>24</value>
       </greater-than>
     </condition>
-    <expression>
-        <difference>
-            <property>autopilot/settings/heading-bug-deg</property>
-            <property>instrumentation/heading-indicator/indicated-heading-deg</property>
-        </difference>
-    </expression>
+    <property>autopilot/settings/heading-bug-deg</property>
     <center>
       <y-m>-0.0007755 </y-m>
       <z-m> 0.0026305 </z-m>

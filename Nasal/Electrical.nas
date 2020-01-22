@@ -210,6 +210,8 @@ var electrical_bus = func(){
   setprop(OutPuts~"fuel-pump",bus_volts * f_pump2); 
   setprop(OutPuts~"fuel-pump",bus_volts * f_pump3); 
   load += getprop(OutPuts~"fuel-pump") * 0.02;
+  setprop(OutPuts~"adi", bus_volts); 
+  load += getprop(OutPuts~"adi") * 0.001;
   setprop(OutPuts~"pitot-heat",bus_volts * getprop("/controls/anti-ice/pitot-heat")); 
   setprop(OutPuts~"landing-lights",bus_volts * getprop("/controls/lighting/landing-lights")); 
   setprop(OutPuts~"cabin-lights",bus_volts * getprop("/controls/lighting/cabin-lights")); 

@@ -50,6 +50,12 @@
         <number>0</number>
       </radar>
     </instrumentation>
+
+    <systems>
+        <property-rule n="100">
+            <path>Systems/vacuum.xml</path>
+        </property-rule>
+    </systems>
     
   </sim>
   

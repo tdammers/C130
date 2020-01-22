@@ -1,0 +1,29 @@
+<PropertyList>
+    <filter>
+        <type>gain</type>
+        <enable>
+            <condition>
+                <or>
+                    <less-than>
+                        <property>/systems/vacuum[0]/suction-inhg</property>
+                        <value type="double">-1</value>
+                    </less-than>
+                    <less-than>
+                        <property>/systems/vacuum[1]/suction-inhg</property>
+                        <value type="double">-1</value>
+                    </less-than>
+                </or>
+            </condition>
+        </enable>
+        <gain>1</gain>
+        <input>
+            <value>1</value>
+        </input>
+        <output>
+            <property>/instrumentation/attitude-indicator/spin</property>
+        </output>
+        <output>
+            <property>/instrumentation/heading-indicator/spin</property>
+        </output>
+    </filter>
+</PropertyList>

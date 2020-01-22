@@ -305,7 +305,7 @@
     <type>rotate</type>
     <object-name>aileronG</object-name>
     <property>surface-positions/left-aileron-pos-norm</property>
-    <factor> 25 </factor>
+    <factor> -25 </factor>
     <axis>
       <x1-m>   1.200 </x1-m>
       <y1-m> -19.853 </y1-m>
@@ -320,7 +320,7 @@
     <type>rotate</type>
     <object-name>aileronD</object-name>
     <property>surface-positions/right-aileron-pos-norm</property>
-    <factor> 25 </factor>
+    <factor> -25 </factor>
     <axis>
       <x1-m>  1.837 </x1-m>
       <y1-m> 14.018 </y1-m>
@@ -519,7 +519,7 @@
     <type>rotate</type>
     <object-name>direction</object-name>
     <property>surface-positions/rudder-pos-norm</property>
-    <factor> -25 </factor>
+    <factor> 50 </factor>
     <axis>
       <x1-m> 13.407 </x1-m>
       <y1-m>  0.000 </y1-m>
@@ -917,7 +917,7 @@
   <animation>
     <type>spin</type>
     <object-name>roue2G</object-name>
-    <property>gear/gear[3]/rollspeed-ms</property>
+    <property>gear/gear[1]/rollspeed-ms</property>
     <factor> -30 </factor>
     <center>
       <x-m>  0.702 </x-m>
@@ -951,7 +951,7 @@
   <animation>
     <type>spin</type>
     <object-name>roue2D</object-name>
-    <property>gear/gear[4]/rollspeed-ms</property>
+    <property>gear/gear[2]/rollspeed-ms</property>
     <factor> -30 </factor>
     <center>
       <x-m>  0.702 </x-m>
