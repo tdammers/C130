@@ -35,18 +35,18 @@
     <binding>
       <command>property-toggle</command>
       <property>controls/engines/engine[0]/reverser</property>
-      <property>controls/engines/engine[1]/reverser</property>
-      <property>controls/engines/engine[2]/reverser</property>
-      <property>controls/engines/engine[3]/reverser</property>
     </binding>
     <binding>
-      <command>nasal</command>
-      <script>
-        setprop("controls/engines/engine[0]/propeller-pitch",0);
-        setprop("controls/engines/engine[1]/propeller-pitch",0);
-        setprop("controls/engines/engine[2]/propeller-pitch",0);
-        setprop("controls/engines/engine[3]/propeller-pitch",0);
-      </script>
+      <command>property-toggle</command>
+      <property>controls/engines/engine[1]/reverser</property>
+    </binding>
+    <binding>
+      <command>property-toggle</command>
+      <property>controls/engines/engine[2]/reverser</property>
+    </binding>
+    <binding>
+      <command>property-toggle</command>
+      <property>controls/engines/engine[3]/reverser</property>
     </binding>
   </key>
   
