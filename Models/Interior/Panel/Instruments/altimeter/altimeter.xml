@@ -117,9 +117,10 @@
     <hovered>
       <binding>
         <command>set-tooltip</command>
-        <label>QNH: %2.2f</label>
+        <label>QNH: %2.2f / %5.1f</label>
         <tooltip-id>qnh</tooltip-id>
         <property>/instrumentation/altimeter/setting-inhg</property>
+        <property>/instrumentation/altimeter/setting-hpa</property>
       </binding>
     </hovered>
   </animation>
