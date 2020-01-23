@@ -20,8 +20,21 @@ var start_engine = func(num, cont) {
     check_loop();
 };
 
-var shutdown = func {
+var shutdown = func(num, cont) {
     var cutoff ="controls/engines/engine[" ~ num ~ "]/cutoff";
+    var n1 = "fdm/jsbsim/propulsion/engine[" ~ num ~ "]/n1";
+    setprop(cutoff, 1);
+    var check_loop = func {
+        if (getprop(n1) < 20) {
+            if (cont != nil) {
+                cont();
+            }
+        }
+        else {
+            settimer(check_loop, 1);
+        }
+    }
+    check_loop();
 };
 
 setlistener("/sim/model/autostart", func(idle) {
@@ -33,6 +46,10 @@ setlistener("/sim/model/autostart", func(idle) {
             nil)})})});
     }
     else {
-        shutdown();
+        shutdown(0,
+        func { shutdown(1,
+        func { shutdown(2,
+        func { shutdown(3,
+            nil)})})});
     }
 }, 0, 0);

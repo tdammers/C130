@@ -3,6 +3,7 @@
 <PropertyList>
     <params>
         <rpm>/engines/engine/rpm</rpm>
+        <rpm-obs>/engines/engine/observed-rpm</rpm-obs>
         <pitch>/engines/engine/pitch</pitch>
     </params>
     
@@ -36,7 +37,7 @@
         <condition>
             <less-than>
                 <property alias="../../../../params/rpm"/>
-                <value>1000</value>
+                <value>60</value>
             </less-than>
         </condition>
     </animation>
@@ -96,7 +97,7 @@
         <condition>
             <greater-than>
                 <property alias="../../../../params/rpm"/>
-                <value>1000</value>
+                <value>600</value>
             </greater-than>
         </condition>
     </animation>
@@ -107,12 +108,12 @@
         <condition>
             <and>
                 <greater-than>
-                    <property alias="../../../../params/rpm"/>
-                    <value>400.000</value>
+                    <property alias="../../../../../params/rpm"/>
+                    <value>60</value>
                 </greater-than>
                 <less-than>
-                    <property alias="../../../../params/rpm"/>
-                    <value>1000.001</value>
+                    <property alias="../../../../../params/rpm"/>
+                    <value>600</value>
                 </less-than>
             </and>
         </condition>
@@ -122,10 +123,10 @@
     <animation>
         <type>spin</type>
         <object-name>heliceD</object-name>
-        <property alias="../../params/rpm"/>
-        <factor> -0.479 </factor>
+        <property alias="../../params/rpm-obs"/>
+        <factor>1</factor>
         <axis>
-            <x> 1 </x>
+            <x>-1 </x>
             <y> 0 </y>
             <z> 0 </z>
         </axis>

@@ -1,0 +1,95 @@
+<PropertyList>
+
+    <!-- PROP 0 (#1 engine) -->
+    <filter>
+        <type>gain</type>
+        <gain>1</gain>
+        <input>
+            <expression>
+                <difference>
+                    <mod>
+                        <sum>
+                            <property>/engines/engine[0]/rpm</property>
+                            <value>225</value>
+                        </sum>
+                        <value>450</value>
+                    </mod>
+                    <value>225</value>
+                </difference>
+            </expression>
+        </input>
+        <output>
+            <property>/engines/engine[0]/observed-rpm</property>
+        </output>
+    </filter>
+
+    <!-- PROP 1 (#2 engine) -->
+    <filter>
+        <type>gain</type>
+        <gain>1</gain>
+        <input>
+            <expression>
+                <difference>
+                    <mod>
+                        <sum>
+                            <property>/engines/engine[1]/rpm</property>
+                            <value>225</value>
+                        </sum>
+                        <value>450</value>
+                    </mod>
+                    <value>225</value>
+                </difference>
+            </expression>
+        </input>
+        <output>
+            <property>/engines/engine[1]/observed-rpm</property>
+        </output>
+    </filter>
+
+    <!-- PROP 2 (#3 engine) -->
+    <filter>
+        <type>gain</type>
+        <gain>1</gain>
+        <input>
+            <expression>
+                <difference>
+                    <mod>
+                        <sum>
+                            <property>/engines/engine[2]/rpm</property>
+                            <value>225</value>
+                        </sum>
+                        <value>450</value>
+                    </mod>
+                    <value>225</value>
+                </difference>
+            </expression>
+        </input>
+        <output>
+            <property>/engines/engine[2]/observed-rpm</property>
+        </output>
+    </filter>
+
+    <!-- PROP 3 (#4 engine) -->
+    <filter>
+        <type>gain</type>
+        <gain>1</gain>
+        <input>
+            <expression>
+                <difference>
+                    <mod>
+                        <sum>
+                            <property>/engines/engine[3]/rpm</property>
+                            <value>225</value>
+                        </sum>
+                        <value>450</value>
+                    </mod>
+                    <value>225</value>
+                </difference>
+            </expression>
+        </input>
+        <output>
+            <property>/engines/engine[3]/observed-rpm</property>
+        </output>
+    </filter>
+
+</PropertyList>

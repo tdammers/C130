@@ -258,8 +258,13 @@
   <!-- Les hélices --> 
   <model>
     <path>Aircraft/C130/Models/Propellers/propeller.xml</path>
-    <overlay><params><rpm>engines/engine[0]/rpm</rpm></params></overlay>
-    <overlay><params><pitch>engines/engine[0]/propeller-pitch</pitch></params></overlay>
+    <overlay>
+        <params>
+            <rpm>engines/engine[0]/rpm</rpm>
+            <rpm-obs>engines/engine[0]/observed-rpm</rpm-obs>
+            <pitch>engines/engine[0]/propeller-pitch</pitch>
+        </params>
+    </overlay>
     <offsets>
       <x-m> -3.764 </x-m>
       <y-m> -9.821 </y-m>
@@ -269,8 +274,13 @@
 
   <model>
     <path>Aircraft/C130/Models/Propellers/propeller.xml</path>
-    <overlay><params><rpm>engines/engine[1]/rpm</rpm></params></overlay>
-    <overlay><params><pitch>engines/engine[1]/propeller-pitch</pitch></params></overlay>
+    <overlay>
+        <params>
+            <rpm>engines/engine[1]/rpm</rpm>
+            <rpm-obs>engines/engine[1]/observed-rpm</rpm-obs>
+            <pitch>engines/engine[1]/propeller-pitch</pitch>
+        </params>
+    </overlay>
     <offsets> 
       <x-m> -3.764 </x-m>
       <y-m> -4.926 </y-m>
@@ -280,8 +290,13 @@
 
   <model>
     <path>Aircraft/C130/Models/Propellers/propeller.xml</path>
-    <overlay><params><rpm>engines/engine[2]/rpm</rpm></params></overlay>
-    <overlay><params><pitch>engines/engine[2]/propeller-pitch</pitch></params></overlay>
+    <overlay>
+        <params>
+            <rpm>engines/engine[2]/rpm</rpm>
+            <rpm-obs>engines/engine[2]/observed-rpm</rpm-obs>
+            <pitch>engines/engine[2]/propeller-pitch</pitch>
+        </params>
+    </overlay>
     <offsets>
       <x-m> -3.764 </x-m>
       <y-m>  4.926 </y-m>
@@ -291,8 +306,13 @@
 
   <model>
     <path>Aircraft/C130/Models/Propellers/propeller.xml</path>
-    <overlay><params><rpm>engines/engine[3]/rpm</rpm></params></overlay>
-    <overlay><params><pitch>engines/engine[3]/propeller-pitch</pitch></params></overlay>
+    <overlay>
+        <params>
+            <rpm>engines/engine[3]/rpm</rpm>
+            <rpm-obs>engines/engine[3]/observed-rpm</rpm-obs>
+            <pitch>engines/engine[3]/propeller-pitch</pitch>
+        </params>
+    </overlay>
     <offsets>
       <x-m> -3.764 </x-m>
       <y-m>  9.821 </y-m>
