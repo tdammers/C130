@@ -69,12 +69,14 @@
                     <property>instrumentation/nav[0]/is-localizer-frequency</property>
                     <value type="bool">false</value>
                 </equals>
+                <!--
                 <less-than>
                     <property>systems/electrical/outputs/adi</property>
                     <value>24</value>
                 </less-than>
+                -->
                 <equals>
-                    <property>instrumentation/nav[0]/in-range</property>
+                    <property>instrumentation/nav[0]/gs-in-range</property>
                     <value>false</value>
                 </equals>
             </or>
@@ -86,23 +88,25 @@
         <object-name>glide-slope-index</object-name>
         <condition>
             <equals>
-                <property>instrumentation/nav[0]/has-gs</property>
+                <property>instrumentation/nav[0]/gs-in-range</property>
                 <value type="bool">true</value>
             </equals>
+            <!--
             <greater-than>
                 <property>systems/electrical/outputs/adi</property>
                 <value>24</value>
             </greater-than>
+            -->
         </condition>
     </animation>
 
     <animation>
         <type>translate</type>
         <object-name>glide-slope-index</object-name>
-        <property>instrumentation/nav[0]/gs-needle-deflection</property>
+        <property>instrumentation/nav[0]/gs-needle-deflection-norm</property>
         <interpolation>
             <entry>
-                <ind>-2.5</ind>
+                <ind>-1.0</ind>
                 <dep>-0.036</dep>
             </entry>
             <entry>
@@ -110,7 +114,7 @@
                 <dep>0</dep>
             </entry>
             <entry>
-                <ind>2.5</ind>
+                <ind>1.0</ind>
                 <dep>0.036</dep>
             </entry>
         </interpolation>
