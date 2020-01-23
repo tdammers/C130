@@ -35,9 +35,10 @@
     <object-name>needle</object-name>
     <property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
     <interpolation>
-      <entry><ind>   0.00 </ind><dep>   0 </dep></entry>
-      <entry><ind>  86.95 </ind><dep>  26 </dep></entry>
-      <entry><ind> 608.69 </ind><dep> 334 </dep></entry>
+      <entry><ind>   0.00 </ind><dep>   0.0 </dep></entry>
+      <entry><ind>  25.00 </ind><dep>   0.0 </dep></entry>
+      <entry><ind>  40.00 </ind><dep>  13.5 </dep></entry>
+      <entry><ind> 400.00 </ind><dep> 337.5 </dep></entry>
     </interpolation>   
     <axis>
       <x> -1 </x>
