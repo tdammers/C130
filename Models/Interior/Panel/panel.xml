@@ -138,23 +138,27 @@
   <!-- Horizon Artificiel -->
   <model>
     <path>Aircraft/C130/Models/Interior/Panel/Instruments/ai/adi.xml</path>
-    <offsets>
-      <!-- <x-m> -0.335 </x-m> -->
-      <x-m> -0.330 </x-m>
-      <y-m> -0.417 </y-m>
-      <z-m>  0.252 </z-m>
-    </offsets>
     <scale>
         <x>0.6</x>
         <y>0.6</y>
         <z>0.6</z>
     </scale>
+    <offsets>
+      <x-m> -0.320 </x-m>
+      <y-m> -0.417 </y-m>
+      <z-m>  0.252 </z-m>
+    </offsets>
   </model>
 
   <model>
-    <path>Aircraft/C130/Models/Interior/Panel/Instruments/ai/ai.xml</path>
+    <path>Aircraft/C130/Models/Interior/Panel/Instruments/ai/adi.xml</path>
+    <scale>
+        <x>0.6</x>
+        <y>0.6</y>
+        <z>0.6</z>
+    </scale>
     <offsets>
-      <x-m> -0.335 </x-m>
+      <x-m> -0.320 </x-m>
       <y-m>  0.445 </y-m>
       <z-m>  0.252 </z-m>
     </offsets>
