@@ -350,7 +350,8 @@
 
   <!-- Fuel Flow -->
   <model>
-    <path>Aircraft/C130/Models/Interior/Panel/Instruments/fuel/fuel1.xml</path>
+    <path>Aircraft/C130/Models/Interior/Panel/Instruments/fuel/fuel.xml</path>
+    <overlay><params><fuel-flow>/engines/engine[0]/fuel-flow_pph</fuel-flow></params></overlay>
     <offsets>
       <x-m> -0.325 </x-m>
       <y-m> -0.114 </y-m>
@@ -359,7 +360,8 @@
   </model>
 
   <model>
-    <path>Aircraft/C130/Models/Interior/Panel/Instruments/fuel/fuel2.xml</path>
+    <path>Aircraft/C130/Models/Interior/Panel/Instruments/fuel/fuel.xml</path>
+    <overlay><params><fuel-flow>/engines/engine[1]/fuel-flow_pph</fuel-flow></params></overlay>
     <offsets>
       <x-m> -0.325 </x-m>
       <y-m> -0.038 </y-m>
@@ -368,7 +370,8 @@
   </model>
 
   <model>
-    <path>Aircraft/C130/Models/Interior/Panel/Instruments/fuel/fuel3.xml</path>
+    <path>Aircraft/C130/Models/Interior/Panel/Instruments/fuel/fuel.xml</path>
+    <overlay><params><fuel-flow>/engines/engine[2]/fuel-flow_pph</fuel-flow></params></overlay>
     <offsets>
       <x-m> -0.325 </x-m>
       <y-m>  0.038 </y-m>
@@ -377,7 +380,8 @@
   </model>
 
   <model>
-    <path>Aircraft/C130/Models/Interior/Panel/Instruments/fuel/fuel4.xml</path>
+    <path>Aircraft/C130/Models/Interior/Panel/Instruments/fuel/fuel.xml</path>
+    <overlay><params><fuel-flow>/engines/engine[3]/fuel-flow_pph</fuel-flow></params></overlay>
     <offsets>
       <x-m> -0.325 </x-m>
       <y-m>  0.114 </y-m>
