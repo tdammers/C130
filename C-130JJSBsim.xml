@@ -87,7 +87,7 @@
     <pointmass name="Payload">
         <weight unit="LBS">0</weight>
         <location name="POINTMASS" unit="IN">
-            <x> 560.40 </x>
+            <x> 640.40 </x>
             <y>   0.00 </y>
             <z>   0.00 </z>
         </location>
@@ -201,7 +201,7 @@
     <location unit="IN">
       <x> 600.40 </x>
       <y>-265.40 </y>
-      <z>  20.00 </z>
+      <z>   0.00 </z>
     </location>
     <orient unit="DEG">
       <pitch> 0.00 </pitch>
@@ -214,7 +214,7 @@
      <location unit="IN">
        <x> 600.40 </x>
        <y>-265.40 </y>
-       <z>  20.00 </z>
+       <z>   0.00 </z>
      </location>
      <orient unit="DEG">
        <pitch> 0.00 </pitch>
@@ -228,7 +228,7 @@
     <location unit="IN">
       <x> 610.40 </x>
       <y>-265.40 </y>
-      <z>  20.00 </z>
+      <z>   0.00 </z>
     </location>
     <orient unit="DEG">
       <pitch> 0.00 </pitch>
@@ -241,7 +241,7 @@
      <location unit="IN">
        <x> 610.40 </x>
        <y> -265.40 </y>
-       <z>  20.00 </z>
+       <z>   0.00 </z>
      </location>
      <orient unit="DEG">
        <pitch> 0.00 </pitch>
@@ -255,7 +255,7 @@
     <location unit="IN">
       <x> 610.40 </x>
       <y> 265.40 </y>
-      <z>  20.00 </z>
+      <z>   0.00 </z>
     </location>
     <orient unit="DEG">
       <pitch> 0.00 </pitch>
@@ -268,7 +268,7 @@
      <location unit="IN">
        <x> 60.40 </x>
        <y> 265.40 </y>
-       <z>  20.00 </z>
+       <z>   0.00 </z>
      </location>
      <orient unit="DEG">
        <pitch> 0.00 </pitch>
@@ -282,7 +282,7 @@
     <location unit="IN">
       <x> 610.40 </x>
       <y> 265.40 </y>
-      <z>  20.00 </z>
+      <z>   0.00 </z>
     </location>
     <orient unit="DEG">
       <pitch> 0.00 </pitch>
@@ -295,7 +295,7 @@
      <location unit="IN">
        <x> 610.40 </x>
        <y> 265.40 </y>
-       <z>  20.00 </z>
+       <z>   0.00 </z>
      </location>
      <orient unit="DEG">
        <pitch> 0.00 </pitch>
@@ -548,56 +548,52 @@
   </channel>
 
   <channel name="Landing Gear">
-   <kinematic name="Gear Control">
-     <input>gear/gear-cmd-norm</input>
-     <traverse>
-       <setting>
-          <position> 0 </position>
-          <time>     0 </time>
-       </setting>
-       <setting>
-          <position> 1 </position>
-          <time>     5 </time>
-       </setting>
-     </traverse>
-     <output>gear/gear-pos-norm</output>
-   </kinematic>
+    <kinematic name="Gear Control">
+      <input>gear/gear-cmd-norm</input>
+      <traverse>
+        <setting>
+           <position> 0 </position>
+           <time>     0 </time>
+        </setting>
+        <setting>
+           <position> 1 </position>
+           <time>     5 </time>
+        </setting>
+      </traverse>
+      <output>gear/gear-pos-norm</output>
+    </kinematic>
 
-<kinematic name="names/nose-wheel-steering/kinematic-norm">
-<input>fcs/steer-cmd-norm</input>
-<traverse>
-<setting>
-<position>-1.0</position>
-<time>0.0</time>
-</setting>
-<setting>
-<position>1.0</position>
-<time>0.5</time>
-</setting>
-</traverse>
-<output>gear/unit[0]/nose-wheel-steering/kinematic-norm</output>
-</kinematic>
+    <kinematic name="names/nose-wheel-steering/kinematic-norm">
+        <input>fcs/steer-cmd-norm</input>
+        <traverse>
+            <setting>
+                <position>-1.0</position>
+                <time>0.0</time>
+            </setting>
+            <setting>
+                <position>1.0</position>
+                <time>0.5</time>
+            </setting>
+        </traverse>
+        <output>gear/unit[0]/nose-wheel-steering/kinematic-norm</output>
+    </kinematic>
 
-<scheduled_gain name="names/nose-wheel-steering/steer-pos-deg">
-<input>gear/unit[0]/nose-wheel-steering/kinematic-norm</input>
-<table>
-<independentVar>velocities/vg-fps</independentVar>
-<tableData><!-- note that this is positive also when moving in reverse -->
-5.0 5.00
-10.0 10.00
-15.0 20.00
-20.0 30.00
-25.0 30.00
-30.0 30.00
-35.0 20.00
-50.0 15.00
-100.0 1.50
-150.0 0.75
-200.0 0.50 <!-- by this speed the front wheel hardly touches the runway -->
-</tableData>
-</table>
-<output>fcs/steer-pos-deg</output>
-</scheduled_gain>
+    <scheduled_gain name="names/nose-wheel-steering/steer-pos-deg">
+        <input>gear/unit[0]/nose-wheel-steering/kinematic-norm</input>
+        <table>
+            <independentVar>velocities/vg-fps</independentVar>
+            <tableData><!-- note that this is positive also when moving in reverse -->
+                0.0 30.00
+                30.0 30.00
+                35.0 20.00
+                50.0 15.00
+                100.0  1.50
+                150.0  0.75
+                200.0  0.50 <!-- by this speed the front wheel hardly touches the runway -->
+            </tableData>
+        </table>
+        <output>fcs/steer-pos-deg</output>
+    </scheduled_gain>
 
   </channel>
 
