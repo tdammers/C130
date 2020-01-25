@@ -49,6 +49,10 @@
         <name>radar</name>
         <number>0</number>
       </radar>
+      <radar-altimeter>
+        <name>radar-altimeter</name>
+        <number>0</number>
+      </radar-altimeter>
     </instrumentation>
 
     <systems>
