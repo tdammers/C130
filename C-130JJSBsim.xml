@@ -64,25 +64,36 @@
  </metrics>
 
  <mass_balance>
-   <ixx unit="SLUG*FT2">   1057863 </ixx>
-   <iyy unit="SLUG*FT2">    688794 </iyy>
-   <izz unit="SLUG*FT2">   1722828 </izz>
-   <emptywt unit="LBS" >     75562 </emptywt>
-   <location name="CG" unit="IN">
-     <x> 600.40 </x>
-     <y>   0.00 </y>
-     <z> -29.37 </z>
-   </location>
-   <pointmass name="Payload">
-    <description> 40068 LBS + full (39370 LBS) fuel should bring model up to entered max weight</description>
-    <weight unit="LBS">  0 </weight>
-    <location name="POINTMASS" unit="IN">
-      <x> 600.40 </x>
-      <y>   0.00 </y>
-      <z> -29.37 </z>
+    <ixx unit="SLUG*FT2">   1057863 </ixx>
+    <iyy unit="SLUG*FT2">    688794 </iyy>
+    <izz unit="SLUG*FT2">   1722828 </izz>
+    <emptywt unit="LBS" >     75562 </emptywt>
+    
+    <location name="CG" unit="IN">
+        <x> 600.40 </x>
+        <y>   0.00 </y>
+        <z> -29.37 </z>
     </location>
-  </pointmass> 
- </mass_balance>
+    
+    <pointmass name="Crew">
+        <weight unit="LBS">800</weight>
+        <location name="POINTMASS" unit="IN">
+            <x>  20.00 </x>
+            <y>   0.00 </y>
+            <z> -24.37 </z>
+        </location>
+    </pointmass>
+    
+    <pointmass name="Payload">
+        <weight unit="LBS">0</weight>
+        <location name="POINTMASS" unit="IN">
+            <x> 560.40 </x>
+            <y>   0.00 </y>
+            <z>   0.00 </z>
+        </location>
+    </pointmass>
+    
+  </mass_balance>
 
  <ground_reactions>
 
@@ -134,11 +145,35 @@
    <retractable>1</retractable>
   </contact>
 
+  <contact type="STRUCTURE" name="NOSE">
+    <location unit="IN">
+     <x>   0.00 </x>
+     <y>   0.00 </y>
+     <z>  20.00 </z>
+    </location>
+    <static_friction>  1.00 </static_friction>
+    <dynamic_friction> 1.00 </dynamic_friction>
+    <spring_coeff unit="LBS/FT">      155000.00 </spring_coeff>
+    <damping_coeff unit="LBS/FT/SEC"> 100000.00 </damping_coeff>
+  </contact>
+
+  <contact type="STRUCTURE" name="TAIL">
+    <location unit="IN">
+     <x>1174.80</x>
+     <y>   0.00</y>
+     <z> 140.00</z>
+    </location>
+    <static_friction>  1.00 </static_friction>
+    <dynamic_friction> 1.00 </dynamic_friction>
+    <spring_coeff unit="LBS/FT">      155000.00 </spring_coeff>
+    <damping_coeff unit="LBS/FT/SEC"> 100000.00 </damping_coeff>
+  </contact>
+
   <contact type="STRUCTURE" name="LEFT_WING">
     <location unit="IN">
      <x> 600.40 </x>
-     <y> -66.35 </y>
-     <z> -29.37 </z>
+     <y>-794.0 </y>
+     <z> 129.37 </z>
     </location>
     <static_friction>  1.00 </static_friction>
     <dynamic_friction> 1.00 </dynamic_friction>
@@ -149,8 +184,8 @@
   <contact type="STRUCTURE" name="RIGHT_WING">
     <location unit="IN">
      <x> 600.40 </x>
-     <y>  66.35 </y>
-     <z> -29.37 </z>
+     <y> 794.0 </y>
+     <z> 129.37 </z>
     </location>
     <static_friction>  1.00 </static_friction>
     <dynamic_friction> 1.00 </dynamic_friction>
@@ -165,8 +200,8 @@
    <engine file="AE2100D3">
     <location unit="IN">
       <x> 600.40 </x>
-      <y> -265.40 </y>
-      <z> -40.00 </z>
+      <y>-265.40 </y>
+      <z>  20.00 </z>
     </location>
     <orient unit="DEG">
       <pitch> 0.00 </pitch>
@@ -178,8 +213,8 @@
     <thruster file="R391">
      <location unit="IN">
        <x> 600.40 </x>
-       <y> -265.40 </y>
-       <z> -40.00 </z>
+       <y>-265.40 </y>
+       <z>  20.00 </z>
      </location>
      <orient unit="DEG">
        <pitch> 0.00 </pitch>
@@ -192,8 +227,8 @@
    <engine file="AE2100D3">
     <location unit="IN">
       <x> 610.40 </x>
-      <y> -265.40 </y>
-      <z> -40.00 </z>
+      <y>-265.40 </y>
+      <z>  20.00 </z>
     </location>
     <orient unit="DEG">
       <pitch> 0.00 </pitch>
@@ -206,7 +241,7 @@
      <location unit="IN">
        <x> 610.40 </x>
        <y> -265.40 </y>
-       <z> -40.00 </z>
+       <z>  20.00 </z>
      </location>
      <orient unit="DEG">
        <pitch> 0.00 </pitch>
@@ -220,7 +255,7 @@
     <location unit="IN">
       <x> 610.40 </x>
       <y> 265.40 </y>
-      <z> -40.00 </z>
+      <z>  20.00 </z>
     </location>
     <orient unit="DEG">
       <pitch> 0.00 </pitch>
@@ -233,7 +268,7 @@
      <location unit="IN">
        <x> 60.40 </x>
        <y> 265.40 </y>
-       <z> -40.00 </z>
+       <z>  20.00 </z>
      </location>
      <orient unit="DEG">
        <pitch> 0.00 </pitch>
@@ -247,7 +282,7 @@
     <location unit="IN">
       <x> 610.40 </x>
       <y> 265.40 </y>
-      <z> -40.00 </z>
+      <z>  20.00 </z>
     </location>
     <orient unit="DEG">
       <pitch> 0.00 </pitch>
@@ -260,7 +295,7 @@
      <location unit="IN">
        <x> 610.40 </x>
        <y> 265.40 </y>
-       <z> -40.00 </z>
+       <z>  20.00 </z>
      </location>
      <orient unit="DEG">
        <pitch> 0.00 </pitch>

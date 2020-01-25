@@ -3,7 +3,7 @@
 <!-- Lockheed C130 Hercules. -->
 
 <PropertyList include="c130-jsb-base.xml">
-  
+
   <sim include="Systems/c130-views.xml">
 
     <description>C130 Hercules (YASim)</description>
@@ -46,6 +46,22 @@
     <menubar include="Dialogs/c130-jsb-menu.xml"/>
     
   </sim>
+
+  
+  <payload>
+      <weight n="0">
+          <name>Crew</name>
+          <min-lb>90</min-lb>
+          <max-lb>2000</max-lb>
+          <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[0]"/>
+      </weight>
+      <weight n="1">
+          <name>Payload</name>
+          <min-lb>0</min-lb>
+          <max-lb>40000</max-lb>
+          <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[1]"/>
+      </weight>
+  </payload>
 
   <input>
     <keyboard include="Systems/c130-keyboard.xml"/>
