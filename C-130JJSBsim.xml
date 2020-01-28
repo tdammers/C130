@@ -87,7 +87,7 @@
     <pointmass name="Payload">
         <weight unit="LBS">0</weight>
         <location name="POINTMASS" unit="IN">
-            <x> 640.40 </x>
+            <x> 500.40 </x>
             <y>   0.00 </y>
             <z>   0.00 </z>
         </location>
@@ -210,7 +210,8 @@
     </orient>
     <feed>0</feed>
     <feed>4</feed>
-    <thruster file="R391">
+    <!-- <thruster file="R391"> -->
+    <thruster file="t56_prop">
      <location unit="IN">
        <x> 600.40 </x>
        <y>-265.40 </y>
@@ -237,7 +238,8 @@
     </orient>
     <feed>1</feed>
     <feed>4</feed>
-    <thruster file="R391">
+    <!-- <thruster file="R391"> -->
+    <thruster file="t56_prop">
      <location unit="IN">
        <x> 610.40 </x>
        <y> -265.40 </y>
@@ -264,7 +266,8 @@
     </orient>
     <feed>2</feed>
     <feed>4</feed>
-    <thruster file="R391">
+    <!-- <thruster file="R391"> -->
+    <thruster file="t56_prop">
      <location unit="IN">
        <x> 60.40 </x>
        <y> 265.40 </y>
@@ -291,7 +294,8 @@
     </orient>
     <feed>3</feed>
     <feed>4</feed>
-    <thruster file="R391">
+    <!-- <thruster file="R391"> -->
+    <thruster file="t56_prop">
      <location unit="IN">
        <x> 610.40 </x>
        <y> 265.40 </y>
@@ -583,13 +587,14 @@
         <table>
             <independentVar>velocities/vg-fps</independentVar>
             <tableData><!-- note that this is positive also when moving in reverse -->
+              -30.0 30.00
                 0.0 30.00
-                30.0 30.00
-                35.0 20.00
-                50.0 15.00
-                100.0  1.50
-                150.0  0.75
-                200.0  0.50 <!-- by this speed the front wheel hardly touches the runway -->
+               30.0 30.00
+               35.0 20.00
+               50.0 15.00
+              100.0  1.50
+              150.0  0.75
+              200.0  0.50 <!-- by this speed the front wheel hardly touches the runway -->
             </tableData>
         </table>
         <output>fcs/steer-pos-deg</output>
