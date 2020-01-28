@@ -59,6 +59,9 @@
         <property-rule n="100">
             <path>Systems/vacuum.xml</path>
         </property-rule>
+        <property-rule n="101">
+            <path>Systems/agl.xml</path>
+        </property-rule>
         <property-rule n="1000">
             <path>Systems/props.xml</path>
         </property-rule>

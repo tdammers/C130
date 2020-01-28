@@ -1,0 +1,620 @@
+<?xml version="1.0"?>
+
+<!--
+
+    Undercarriage physics for the JSBSim C-130 "Hercules"
+
+    Copyright (c) 2020 by Tobias Dammers
+
+    Based on C172p ground effects, copyright (c) 2015 Wayne Bragg
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+-->
+
+<system name="c130 undercarriage">
+    
+    <channel name="landing-gear">
+        
+        <!-- Determine if snow on ground -->
+        <switch name="snow-possible">
+            <output>ground/snow-possible</output>
+            <default value="0"/>
+            
+            <!-- No snow possible -->
+            <test logic="AND" value="0">
+                ground/solid EQ 1
+                /position/altitude-agl-m LT /environment/snow-level-m
+            </test>
+            <!-- Snow possible -->
+            <test logic="AND" value="1">
+                ground/solid EQ 1
+                /position/altitude-agl-m GT /environment/snow-level-m
+            </test>
+        </switch>
+        
+        <!-- ================================================================== -->
+        <!-- Friction factors per gear changout for summer, winter or snow      -->
+        <!-- ================================================================== -->
+        
+        <!-- Normalize snow depth to a usable value 1 + (m-0.0)/(0.6-0.0)*(10-1) -->
+        <fcs_function name="normalized-snow-depth">
+            <output>ground/normalized-snow-depth</output>
+            <function>
+                <sum>
+                    <product>
+                        <quotient>
+                            <difference>
+                                <p>/environment/surface/snow-thickness-factor</p>
+                                <v>0.0</v>
+                            </difference>
+                            <difference>
+                                <v>0.6</v>
+                                <v>0.0</v>
+                            </difference>
+                        </quotient>
+                        <difference>
+                            <v>50.0</v>
+                            <v>1</v>
+                        </difference>
+                    </product>
+                    <v>1.0</v>
+                </sum>
+            </function>
+        </fcs_function>
+        
+        <!-- Normalize snow depth to needed value range (0.7 + (m-0.0)/(0.6-0.0)*(0.9999-0.7)) -->
+        <fcs_function name="normalized-ski-snow-depth">
+            <output>ground/normalized-snow-depth-ski</output>
+            <function>
+                <sum>
+                    <product>
+                        <quotient>
+                            <difference>
+                                <p>/environment/surface/snow-thickness-factor</p>
+                                <v>0.0</v>
+                            </difference>
+                            <difference>
+                                <v>0.6</v>
+                                <v>0.0</v>
+                            </difference>
+                        </quotient>
+                        <difference>
+                            <v>0.9999</v>
+                            <v>0.7</v>
+                        </difference>
+                    </product>
+                    <v>0.7</v>
+                </sum>
+            </function>
+        </fcs_function>
+        
+        <!-- factor of snow depth per gear type -->
+        <fcs_function name="snow-affected-friction">
+            <output>ground/snow_friction-factor</output>
+            <function>
+                <ifthen>
+                    <and>
+                        <le>
+                            <p>ground/rolling_friction-factor</p>
+                            <value>2</value>
+                        </le>
+                        <ge>
+                            <p>ground/rolling_friction-factor</p>
+                            <value>1</value>
+                        </ge>
+                    </and>
+                    <value>1.0</value>
+                    <ifthen>
+                        <p>ground/snow-possible</p>
+                        <switch>
+                            <property>undercarriage</property>
+                            <!-- wheels -->
+                            <p>ground/normalized-snow-depth</p>
+                            <!-- skis -->
+                            <p>ground/normalized-snow-depth-ski</p>
+                        </switch>
+                        <value>1.0</value>
+                    </ifthen>
+                </ifthen>
+            </function>
+        </fcs_function>
+        
+        <!-- nose gear -->
+        <fcs_function name="static-friction-nose-gear">
+            <output>gear/unit[0]/static_friction_coeff</output>
+            <function>
+                <ifthen>
+                    <!-- <p>gear/unit[0]/broken</p> -->
+                    <value>0</value>
+                    <p>gear/unit[0]/static_friction_coeff</p>
+                    <!-- winter or above snow line -->
+                    <ifthen>
+                        <and>
+                            <p>ground/snow-possible</p>
+                            <p>/environment/surface/snow-thickness-factor</p>
+                            <or>
+                                <gt>
+                                    <p>gear/unit[0]/rolling_friction-factor</p>
+                                    <v>2</v>
+                                </gt>
+                                <lt>
+                                    <p>gear/unit[0]/rolling_friction-factor</p>
+                                    <v>1</v>
+                                </lt>
+                            </or>
+                        </and>
+                        <product>
+                            <switch>
+                                <property>undercarriage</property>
+                                
+                                <!-- wheels -->
+                                <quotient>
+                                    <value>0.9</value>
+                                    <p>gear/unit[0]/static-friction-factor</p>
+                                </quotient>
+                                <!-- skis -->
+                                <quotient>
+                                    <value>0.7</value>
+                                    <p>gear/unit[0]/static-friction-factor</p>
+                                </quotient>
+                            </switch>
+                            <p>ground/snow_friction-factor</p>
+                        </product>
+                        <!-- not winter and not above snow line -->
+                        <switch>
+                            <property>undercarriage</property>
+                            
+                            <!-- wheels -->
+                            <value>1</value> 
+                            <!-- skis -->
+                            <value>5</value>
+                        </switch>
+                    </ifthen>
+                </ifthen>
+            </function>
+        </fcs_function>
+        <fcs_function name="dynamic-friction-nose-gear">
+            <output>gear/unit[0]/dynamic_friction_coeff</output>
+            <function>
+                <ifthen>
+                    <!-- <p>gear/unit[0]/broken</p> -->
+                    <value>0</value>
+                    <p>gear/unit[0]/dynamic_friction_coeff</p>
+                    <!-- winter or above snow line -->
+                    <ifthen>
+                        <and>
+                            <p>ground/snow-possible</p>
+                            <p>/environment/surface/snow-thickness-factor</p>
+                            <or>
+                                <gt>
+                                    <p>gear/unit[0]/rolling_friction-factor</p>
+                                    <v>2</v>
+                                </gt>
+                                <lt>
+                                    <p>gear/unit[0]/rolling_friction-factor</p>
+                                    <v>1</v>
+                                </lt>
+                            </or>
+                        </and>
+                        <product>
+                            <switch>
+                                <property>undercarriage</property>
+                                
+                                <!-- wheels -->
+                                <quotient>
+                                    <value>0.125</value>
+                                    <p>gear/unit[0]/static-friction-factor</p>
+                                </quotient>
+                                <!-- skis -->
+                                <quotient>
+                                    <value>0.15</value>
+                                    <p>gear/unit[0]/static-friction-factor</p>
+                                </quotient>
+                            </switch>
+                            <p>ground/snow_friction-factor</p>
+                        </product>
+                        <!-- not winter and not above snow line -->
+                        <switch>
+                            <property>undercarriage</property>
+                            
+                            <!-- wheels -->
+                            <value>0.5</value>
+                            <!-- skis -->
+                            <value>0.6</value>
+                        </switch>
+                    </ifthen>
+                </ifthen>
+            </function>
+        </fcs_function>
+        <fcs_function name="rolling-friction-nose-gear">
+            <output>gear/unit[0]/rolling_friction_coeff</output>
+            <function>
+                <ifthen>
+                    <!-- <p>gear/unit[0]/broken</p> -->
+                    <value>0</value>
+                    <p>gear/unit[0]/rolling_friction_coeff</p>
+                    <!-- winter or above snow line -->
+                    <ifthen>
+                        <and>
+                            <p>ground/snow-possible</p>
+                            <p>/environment/surface/snow-thickness-factor</p>
+                            <or>
+                                <gt>
+                                    <p>gear/unit[0]/rolling_friction-factor</p>
+                                    <v>2</v>
+                                </gt>
+                                <lt>
+                                    <p>gear/unit[0]/rolling_friction-factor</p>
+                                    <v>1</v>
+                                </lt>
+                            </or>
+                        </and>
+                        <product>
+                            <switch>
+                                <property>undercarriage</property>
+                                
+                                <!-- wheels -->
+                                <quotient>
+                                    <value>0.006</value>
+                                    <p>gear/unit[0]/rolling_friction-factor</p>
+                                </quotient>
+                                <!-- skis -->
+                                <quotient>
+                                    <value>0.003</value>
+                                    <p>gear/unit[0]/rolling_friction-factor</p>
+                                </quotient>
+                            </switch>
+                            <p>ground/snow_friction-factor</p>
+                        </product>
+                        <!-- not winter and not above snow line -->
+                        <switch>
+                            <property>undercarriage</property>
+                            
+                            <!-- wheels -->
+                            <value>0.02</value>
+                            <!-- skis -->
+                            <value>0.01</value>
+                        </switch>
+                    </ifthen>
+                </ifthen>
+            </function>
+        </fcs_function>
+        
+        <!-- Left gear friction factors -->
+        <fcs_function name="static-friction-left-gear">
+            <output>gear/unit[1]/static_friction_coeff</output>
+            <function>
+                <ifthen>
+                    <!-- <p>gear/unit[1]/broken</p> -->
+                    <value>0</value>
+                    <p>gear/unit[1]/static_friction_coeff</p>
+                    <!-- winter or above snow line -->
+                    <ifthen>
+                        <and>
+                            <p>ground/snow-possible</p>
+                            <p>/environment/surface/snow-thickness-factor</p>
+                            <or>
+                                <gt>
+                                    <p>gear/unit[1]/rolling_friction-factor</p>
+                                    <v>2</v>
+                                </gt>
+                                <lt>
+                                    <p>gear/unit[1]/rolling_friction-factor</p>
+                                    <v>1</v>
+                                </lt>
+                            </or>
+                        </and>
+                        <product>
+                            <switch>
+                                <property>undercarriage</property>
+                                
+                                <!-- wheels -->
+                                <quotient>
+                                    <value>0.2</value>
+                                    <p>gear/unit[1]/static-friction-factor</p>
+                                </quotient>
+                                <!-- skis -->
+                                <quotient>
+                                    <value>0.225</value>
+                                    <p>gear/unit[1]/static-friction-factor</p>
+                                </quotient>
+                            </switch>
+                            <p>ground/snow_friction-factor</p>
+                        </product>
+                        <!-- not winter and not above snow line -->
+                        <switch>
+                            <property>undercarriage</property>
+                            
+                            <!-- wheels -->
+                            <value>0.8</value>
+                            <!-- skis -->
+                            <value>0.9</value>
+                        </switch>
+                    </ifthen>
+                </ifthen>
+            </function>
+        </fcs_function>
+        <fcs_function name="dynamic-friction-left-gear">
+            <output>gear/unit[1]/dynamic_friction_coeff</output>
+            <function>
+                <ifthen>
+                    <!-- <p>gear/unit[1]/broken</p> -->
+                    <value>0</value>
+                    <p>gear/unit[1]/dynamic_friction_coeff</p>
+                    <!-- winter or above snow line -->
+                    <ifthen>
+                        <and>
+                            <p>ground/snow-possible</p>
+                            <p>/environment/surface/snow-thickness-factor</p>
+                            <or>
+                                <gt>
+                                    <p>gear/unit[1]/rolling_friction-factor</p>
+                                    <v>2</v>
+                                </gt>
+                                <lt>
+                                    <p>gear/unit[1]/rolling_friction-factor</p>
+                                    <v>1</v>
+                                </lt>
+                            </or>
+                        </and>
+                        <product>
+                            <switch>
+                                <property>undercarriage</property>
+                                
+                                <!-- wheels -->
+                                <quotient>
+                                    <value>0.15</value>
+                                    <p>gear/unit[1]/static-friction-factor</p>
+                                </quotient>
+                                <!-- skis -->
+                                <quotient>
+                                    <value>0.25</value>
+                                    <p>gear/unit[1]/static-friction-factor</p>
+                                </quotient>
+                            </switch>
+                            <p>ground/snow_friction-factor</p>
+                        </product>
+                        <!-- not winter and not above snow line -->
+                        <switch>
+                            <property>undercarriage</property>
+                            
+                            <!-- wheels -->
+                            <value>0.5</value>
+                            <!-- skis -->
+                            <value>0.6</value>
+                        </switch>
+                    </ifthen>
+                </ifthen>
+            </function>
+        </fcs_function>
+        <fcs_function name="rolling-friction-left-gear">
+            <output>gear/unit[1]/rolling_friction_coeff</output>
+            <function>
+                <ifthen>
+                    <!-- <p>gear/unit[1]/broken</p> -->
+                    <value>0</value>
+                    <p>gear/unit[1]/rolling_friction_coeff</p>
+                    <!-- winter or above snow line -->
+                    <ifthen>
+                        <and>
+                            <p>ground/snow-possible</p>
+                            <p>/environment/surface/snow-thickness-factor</p>
+                            <or>
+                                <gt>
+                                    <p>gear/unit[1]/rolling_friction-factor</p>
+                                    <v>2</v>
+                                </gt>
+                                <lt>
+                                    <p>gear/unit[1]/rolling_friction-factor</p>
+                                    <v>1</v>
+                                </lt>
+                            </or>
+                        </and>
+                        <product>
+                            <switch>
+                                <property>undercarriage</property>
+                                
+                                <!-- wheels -->
+                                <quotient>
+                                    <value>0.006</value>
+                                    <p>gear/unit[1]/rolling_friction-factor</p>
+                                </quotient>
+                                <!-- skis -->
+                                <quotient>
+                                    <value>0.003</value>
+                                    <p>gear/unit[1]/rolling_friction-factor</p>
+                                </quotient>
+                            </switch>
+                            <p>ground/snow_friction-factor</p>
+                        </product>
+                        <!-- not winter and not above snow line -->
+                        <switch>
+                            <property>undercarriage</property>
+                            
+                            <!-- wheels -->
+                            <value>0.02</value>
+                            <!-- skis -->
+                            <value>0.01</value>
+                        </switch>
+                    </ifthen>
+                </ifthen>
+            </function>
+        </fcs_function>
+        
+        <!-- Right gear friction factors -->
+        <fcs_function name="static-friction-left-gear">
+            <output>gear/unit[2]/static_friction_coeff</output>
+            <function>
+                <ifthen>
+                    <!-- <p>gear/unit[2]/broken</p> -->
+                    <value>0</value>
+                    <p>gear/unit[2]/static_friction_coeff</p>
+                    <!-- winter or above snow line -->
+                    <ifthen>
+                        <and>
+                            <p>ground/snow-possible</p>
+                            <p>/environment/surface/snow-thickness-factor</p>
+                            <or>
+                                <gt>
+                                    <p>gear/unit[2]/rolling_friction-factor</p>
+                                    <v>2</v>
+                                </gt>
+                                <lt>
+                                    <p>gear/unit[2]/rolling_friction-factor</p>
+                                    <v>1</v>
+                                </lt>
+                            </or>
+                        </and>
+                        <product>
+                            <switch>
+                                <property>undercarriage</property>
+                                
+                                <!-- wheels -->
+                                <quotient>
+                                    <value>0.2</value>
+                                    <p>gear/unit[2]/static-friction-factor</p>
+                                </quotient>
+                                <!-- skis -->
+                                <quotient>
+                                    <value>0.225</value>
+                                    <p>gear/unit[2]/static-friction-factor</p>
+                                </quotient>
+                            </switch>
+                            <p>ground/snow_friction-factor</p>
+                        </product>
+                        <!-- not winter and not above snow line -->
+                        <switch>
+                            <property>undercarriage</property>
+                            
+                            <!-- wheels -->
+                            <value>0.8</value>
+                            <!-- skis -->
+                            <value>0.9</value>
+                        </switch>
+                    </ifthen>
+                </ifthen>
+            </function>
+        </fcs_function>
+        <fcs_function name="dynamic-friction-left-gear">
+            <output>gear/unit[2]/dynamic_friction_coeff</output>
+            <function>
+                <ifthen>
+                    <!-- <p>gear/unit[2]/broken</p> -->
+                    <value>0</value>
+                    <p>gear/unit[2]/dynamic_friction_coeff</p>
+                    <!-- winter or above snow line -->
+                    <ifthen>
+                        <and>
+                            <p>ground/snow-possible</p>
+                            <p>/environment/surface/snow-thickness-factor</p>
+                            <or>
+                                <gt>
+                                    <p>gear/unit[2]/rolling_friction-factor</p>
+                                    <v>2</v>
+                                </gt>
+                                <lt>
+                                    <p>gear/unit[2]/rolling_friction-factor</p>
+                                    <v>1</v>
+                                </lt>
+                            </or>
+                        </and>
+                        <product>
+                            <switch>
+                                <property>undercarriage</property>
+                                
+                                <!-- wheels -->
+                                <quotient>
+                                    <value>0.15</value>
+                                    <p>gear/unit[2]/static-friction-factor</p>
+                                </quotient>
+                                <!-- skis -->
+                                <quotient>
+                                    <value>0.25</value>
+                                    <p>gear/unit[2]/static-friction-factor</p>
+                                </quotient>
+                            </switch>
+                            <p>ground/snow_friction-factor</p>
+                        </product>
+                        <!-- not winter and not above snow line -->
+                        <switch>
+                            <property>undercarriage</property>
+                            
+                            <!-- wheels -->
+                            <value>0.5</value>
+                            <!-- skis -->
+                            <value>0.6</value>
+                        </switch>
+                    </ifthen>
+                </ifthen>
+            </function>
+        </fcs_function>
+        <fcs_function name="rolling-friction-left-gear">
+            <output>gear/unit[2]/rolling_friction_coeff</output>
+            <function>
+                <ifthen>
+                    <!-- <p>gear/unit[2]/broken</p> -->
+                    <value>0</value>
+                    <p>gear/unit[2]/rolling_friction_coeff</p>
+                    <!-- winter or above snow line -->
+                    <ifthen>
+                        <and>
+                            <p>ground/snow-possible</p>
+                            <p>/environment/surface/snow-thickness-factor</p>
+                            <or>
+                                <gt>
+                                    <p>gear/unit[2]/rolling_friction-factor</p>
+                                    <v>2</v>
+                                </gt>
+                                <lt>
+                                    <p>gear/unit[2]/rolling_friction-factor</p>
+                                    <v>1</v>
+                                </lt>
+                            </or>
+                        </and>
+                        <product>
+                            <switch>
+                                <property>undercarriage</property>
+                                
+                                <!-- wheels -->
+                                <quotient>
+                                    <value>0.006</value>
+                                    <p>gear/unit[2]/rolling_friction-factor</p>
+                                </quotient>
+                                <!-- skis -->
+                                <quotient>
+                                    <value>0.003</value>
+                                    <p>gear/unit[2]/rolling_friction-factor</p>
+                                </quotient>
+                            </switch>
+                            <p>ground/snow_friction-factor</p>
+                        </product>
+                        <!-- not winter and not above snow line -->
+                        <switch>
+                            <property>undercarriage</property>
+                            
+                            <!-- wheels -->
+                            <value>0.02</value>
+                            <!-- skis -->
+                            <value>0.01</value>
+                        </switch>
+                    </ifthen>
+                </ifthen>
+            </function>
+        </fcs_function>
+    </channel>
+    
+</system>
+

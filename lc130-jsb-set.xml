@@ -81,7 +81,7 @@
   
   <fdm>
     <jsbsim>
-        <undercarriage type="int">0</undercarriage>
+        <undercarriage type="int">1</undercarriage>
     </jsbsim>
   </fdm>
 
