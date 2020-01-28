@@ -103,8 +103,8 @@
      <y>   0.00 </y>
      <z> -41.98 </z>
    </location>
-   <static_friction>  2.40 </static_friction>
-   <dynamic_friction> 2.00 </dynamic_friction>
+   <static_friction>  0.80 </static_friction>
+   <dynamic_friction> 0.50 </dynamic_friction>
    <rolling_friction> 0.05 </rolling_friction>
    <spring_coeff unit="LBS/FT">      46500.00 </spring_coeff>
    <damping_coeff unit="LBS/FT/SEC"> 77500.00 </damping_coeff>
@@ -119,8 +119,8 @@
      <y> -175.16 </y>
      <z> -39.98 </z>
    </location>
-   <static_friction>  2.40 </static_friction>
-   <dynamic_friction> 2.00 </dynamic_friction>
+   <static_friction>  0.80 </static_friction>
+   <dynamic_friction> 0.50 </dynamic_friction>
    <rolling_friction> 0.02 </rolling_friction>
    <spring_coeff unit="LBS/FT">      155000.00 </spring_coeff>
    <damping_coeff unit="LBS/FT/SEC"> 77500.00 </damping_coeff>
@@ -135,8 +135,8 @@
      <y> 175.16 </y>
      <z> -39.98 </z>
    </location>
-   <static_friction>  2.40 </static_friction>
-   <dynamic_friction> 2.00 </dynamic_friction>
+   <static_friction>  0.80 </static_friction>
+   <dynamic_friction> 0.50 </dynamic_friction>
    <rolling_friction> 0.02 </rolling_friction>
    <spring_coeff unit="LBS/FT">      155000.00 </spring_coeff>
    <damping_coeff unit="LBS/FT/SEC"> 77500.00 </damping_coeff>
@@ -967,7 +967,7 @@
  <external_reactions>
  </external_reactions>
 
-  <!-- <system file="undercarriage"/> -->
+ <system file="undercarriage"/>
 
 </fdm_config>
 
