@@ -56,6 +56,9 @@
     </instrumentation>
 
     <systems>
+        <autopilot>
+            <path>Aircraft/C130/Systems/autopilot.xml</path>
+        </autopilot>
         <property-rule n="100">
             <path>Systems/vacuum.xml</path>
         </property-rule>
@@ -170,12 +173,6 @@
     </submodels>
   </ai>
 
-  <!-- autopilot -->
-  <autopilot>
-    <settings>
-      <target-speed-kt>330</target-speed-kt>
-    </settings>
-  </autopilot>
   <!--
   <consumables>
   <fuel>
