@@ -167,8 +167,8 @@
             <prop>/autopilot/locks/altitude</prop>
             <value>vertical-speed-hold</value>
         </enable>
-        <input>/autopilot/settings/vertical-speed-fps</input>
-        <output>/autopilot/internal/vertical-speed-fps</output>
+        <input>/autopilot/settings/vertical-speed-fpm</input>
+        <output>/autopilot/internal/vertical-speed-fpm</output>
     </filter>
 
     <filter>
