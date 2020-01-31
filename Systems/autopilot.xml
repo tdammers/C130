@@ -110,14 +110,28 @@
         <name>Pitch hold</name>
         <debug>true</debug>
         <enable>
-            <prop>/autopilot/locks/altitude</prop>
-            <value>pitch-hold</value>
+            <condition>
+                <or>
+                    <equals>
+                        <property>/autopilot/locks/altitude</property>
+                        <value>pitch-hold</value>
+                    </equals>
+                    <equals>
+                        <property>/autopilot/locks/altitude</property>
+                        <value>vertical-speed-hold</value>
+                    </equals>
+                    <equals>
+                        <property>/autopilot/locks/altitude</property>
+                        <value>altitude-hold</value>
+                    </equals>
+                </or>
+            </condition>
         </enable>
         <input>
             <prop>/orientation/pitch-deg</prop>
         </input>
         <reference>
-            <prop>/autopilot/settings/target-pitch-deg</prop>
+            <prop>/autopilot/internal/target-pitch-deg</prop>
         </reference>
         <output>
             <prop>/controls/flight/elevator</prop>
@@ -131,53 +145,90 @@
         </config>
     </pid-controller>
 
-    <pid-controller>
-        <name>Pitch hold (vertical speed)</name>
-        <debug>true</debug>
+    <filter>
+        <name>Target pitch forward</name>
+        <type>gain</type>
+        <gain>1</gain>
+        <debug>false</debug>
+        <enable>
+            <prop>/autopilot/locks/altitude</prop>
+            <value>pitch-hold</value>
+        </enable>
+        <input>/autopilot/settings/target-pitch-deg</input>
+        <output>/autopilot/internal/target-pitch-deg</output>
+    </filter>
+
+    <filter>
+        <name>Target vertical speed forward</name>
+        <type>gain</type>
+        <gain>1</gain>
+        <debug>false</debug>
         <enable>
             <prop>/autopilot/locks/altitude</prop>
             <value>vertical-speed-hold</value>
         </enable>
+        <input>/autopilot/settings/vertical-speed-fps</input>
+        <output>/autopilot/internal/vertical-speed-fps</output>
+    </filter>
+
+    <filter>
+        <name>Alt hold to vertical speed</name>
+        <debug>false</debug>
+        <enable>
+            <prop>/autopilot/locks/altitude</prop>
+            <value>altitude-hold</value>
+        </enable>
+        <type>gain</type>
+        <gain>1</gain>
         <input>
-            <prop>/orientation/pitch-deg</prop>
+            <expression>
+                <product>
+                    <difference>
+                        <property>/autopilot/settings/target-altitude-ft</property>
+                        <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+                    </difference>
+                    <!-- attempt to capture altitude within 10 seconds -->
+                    <value>6</value>
+                </product>
+            </expression>
         </input>
-        <reference>
-            <prop>/autopilot/internal/target-pitch-deg</prop>
-        </reference>
-        <output>
-            <prop>/controls/flight/elevator</prop>
-        </output>
-        <config>
-            <Kp>-0.7</Kp>
-            <Ti>2.0</Ti>
-            <Td>0.1</Td>
-            <u_min>-0.5</u_min>
-            <u_max>0.5</u_max>
-        </config>
-    </pid-controller>
-    <pid-controller>
+        <min>-1000</min>
+        <max>1000</max>
+        <output>/autopilot/internal/vertical-speed-fpm</output>
+    </filter>
+
+    <pi-simple-controller>
         <name>Vertical speed to target pitch</name>
         <debug>true</debug>
         <enable>
-            <prop>/autopilot/locks/altitude</prop>
-            <value>vertical-speed-hold</value>
+            <condition>
+                <or>
+                    <equals>
+                        <property>/autopilot/locks/altitude</property>
+                        <value>vertical-speed-hold</value>
+                    </equals>
+                    <equals>
+                        <property>/autopilot/locks/altitude</property>
+                        <value>altitude-hold</value>
+                    </equals>
+                </or>
+            </condition>
         </enable>
         <input>
             <prop>/velocities/vertical-speed-fps</prop>
             <scale>60.0</scale>
         </input>
         <reference>
-            <prop>/autopilot/settings/vertical-speed-fpm</prop>
+            <prop>/autopilot/internal/vertical-speed-fpm</prop>
         </reference>
         <output>
             <prop>/autopilot/internal/target-pitch-deg</prop>
         </output>
         <config>
-            <Kp>0.001</Kp>
-            <Ti>0.8</Ti>
-            <Td>0.0</Td>
+            <Kp>0.002</Kp>
+            <Ki>0.004</Ki>
             <u_min>-15</u_min>
             <u_max>15</u_max>
         </config>
-    </pid-controller>
+    </pi-simple-controller>
 </PropertyList>
