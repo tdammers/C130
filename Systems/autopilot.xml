@@ -14,6 +14,59 @@
         <input><value>0</value></input>
         <output>/autopilot/internal/target-roll-deg</output>
     </filter>
+
+    <pi-simple-controller>
+        <name>CDI integrator</name>
+        <debug>false</debug>
+        <config>
+            <Kp>-0.05</Kp>
+            <Ki>-0.002</Ki>
+        </config>
+        <!-- <input>/instrumentation/nav[0]/heading-needle-deflection-norm</input> -->
+        <input>/instrumentation/nav[0]/crosstrack-error-m</input>
+        <output>/autopilot/internal/intercept-angle-deg</output>
+        <min>-45.0</min>
+        <max>45.0</max>
+    </pi-simple-controller>
+
+    <filter>
+        <name>NAV1 intercept course</name>
+        <type>gain</type>
+        <gain>1</gain>
+        <input>
+            <expression>
+                <sum>
+                    <property>/instrumentation/nav[0]/radials/selected-deg</property>
+                    <property>/autopilot/internal/intercept-angle-deg</property>
+                </sum>
+            </expression>
+        </input>
+        <output>/autopilot/internal/intercept-heading-deg</output>
+        <period>
+            <min>0</min>
+            <max>360</max>
+        </period>
+    </filter>
+
+    <filter>
+        <name>NAV1 Intercept Course Error</name>
+        <type>gain</type>
+        <gain>1</gain>
+        <input>
+            <expression>
+                <difference>
+                    <property>/autopilot/internal/intercept-heading-deg</property>
+                    <property>/orientation/heading-magnetic-deg</property>
+                </difference>
+            </expression>
+        </input>
+        <output>/autopilot/internal/intercept-heading-error-deg</output>
+        <period>
+            <min>-180</min>
+            <max>180</max>
+        </period>
+    </filter>
+
     <filter>
         <name>Heading Bug Error</name>
         <type>gain</type>
@@ -32,9 +85,12 @@
             <max>180</max>
         </period>
     </filter>
+
     <pi-simple-controller>
+        <name>Heading bug error to roll</name>
         <enable>
             <condition>
+                <!-- HDG HOLD selected -->
                 <equals>
                     <property>/autopilot/locks/heading</property>
                     <value>dg-heading-hold</value>
@@ -49,7 +105,9 @@
         <min>-30</min>
         <max>30</max>
     </pi-simple-controller>
+
     <pi-simple-controller>
+        <name>True heading error to roll</name>
         <enable>
             <condition>
                 <equals>
@@ -66,8 +124,29 @@
         <min>-30</min>
         <max>30</max>
     </pi-simple-controller>
+
+    <pi-simple-controller>
+        <name>Intercept course error to roll</name>
+        <enable>
+            <condition>
+                <!-- NAV1 post-capture -->
+                <equals>
+                    <property>/autopilot/locks/heading</property>
+                    <value>nav1-hold</value>
+                </equals>
+            </condition>
+        </enable>
+        <input>/autopilot/internal/intercept-heading-error-deg</input>
+        <reference>0</reference>
+        <output>/autopilot/internal/target-roll-deg</output>
+        <Kp>-2.0</Kp>
+        <Ki>-0.02</Ki>
+        <min>-30</min>
+        <max>30</max>
+    </pi-simple-controller>
+
     <pid-controller>
-        <name>Heading hold</name>
+        <name>Roll controller</name>
         <debug>false</debug>
         <enable>
             <condition>
@@ -79,6 +158,10 @@
                     <equals>
                         <property>/autopilot/locks/heading</property>
                         <value>dg-heading-hold</value>
+                    </equals>
+                    <equals>
+                        <property>/autopilot/locks/heading</property>
+                        <value>nav1-hold</value>
                     </equals>
                     <equals>
                         <property>/autopilot/locks/heading</property>
@@ -106,9 +189,51 @@
     </pid-controller>
     
     <!-- vertical modes -->
+
+    <!-- The following does not actually work, unfortunately -->
+    <!--
+    <filter>
+        <type>gain</type>
+        <name>vertical-capture</name>
+        <debug>true</debug>
+        <gain>1</gain>
+        <enable>
+            <condition>
+                <expression>
+                    <and>
+                        <or>
+                            <equals>
+                                <property>/autopilot/locks/altitude</property>
+                                <value>vertical-speed-hold</value>
+                            </equals>
+                            <equals>
+                                <property>/autopilot/locks/altitude</property>
+                                <value>pitch-hold</value>
+                            </equals>
+                        </or>
+                        <less-than>
+                            <abs>
+                                <diff>
+                                    <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+                                    <property>/autopilot/settings/target-altitude-ft</property>
+                                </diff>
+                            </abs>
+                            <value>250</value>
+                        </less-than>
+                    </and>
+                </expression>
+            </condition>
+        </enable>
+        <input>
+            <value type="string">altitude-hold</value>
+        </input>
+        <output>/autopilot/locks/altitude</output>
+    </filter>
+    -->
+
     <pid-controller>
         <name>Pitch hold</name>
-        <debug>true</debug>
+        <debug>false</debug>
         <enable>
             <condition>
                 <or>
@@ -199,7 +324,7 @@
 
     <pi-simple-controller>
         <name>Vertical speed to target pitch</name>
-        <debug>true</debug>
+        <debug>false</debug>
         <enable>
             <condition>
                 <or>

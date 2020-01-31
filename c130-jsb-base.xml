@@ -56,15 +56,15 @@
     </instrumentation>
 
     <systems>
-        <autopilot>
-            <path>Aircraft/C130/Systems/autopilot.xml</path>
-        </autopilot>
         <property-rule n="100">
             <path>Systems/vacuum.xml</path>
         </property-rule>
         <property-rule n="1000">
             <path>Systems/props.xml</path>
         </property-rule>
+        <autopilot>
+            <path>Aircraft/C130/Systems/autopilot.xml</path>
+        </autopilot>
     </systems>
   </sim>
 
