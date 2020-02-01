@@ -190,48 +190,138 @@
     </pid-controller>
     
     <!-- vertical modes -->
-
-    <!-- The following does not actually work, unfortunately -->
-    <!--
+    <!-- vertical capture logic -->
     <filter>
+        <name>Alt capture distance</name>
+        <debug>false</debug>
         <type>gain</type>
-        <name>vertical-capture</name>
-        <debug>true</debug>
         <gain>1</gain>
-        <enable>
-            <condition>
-                <expression>
-                    <and>
-                        <or>
-                            <equals>
-                                <property>/autopilot/locks/altitude</property>
-                                <value>vertical-speed-hold</value>
-                            </equals>
-                            <equals>
-                                <property>/autopilot/locks/altitude</property>
-                                <value>pitch-hold</value>
-                            </equals>
-                        </or>
-                        <less-than>
-                            <abs>
-                                <diff>
-                                    <property>/instrumentation/altimeter/indicated-altitude-ft</property>
-                                    <property>/autopilot/settings/target-altitude-ft</property>
-                                </diff>
-                            </abs>
-                            <value>250</value>
-                        </less-than>
-                    </and>
-                </expression>
-            </condition>
-        </enable>
         <input>
-            <value type="string">altitude-hold</value>
+            <expression>
+                <abs>
+                    <difference>
+                        <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+                        <property>/autopilot/settings/target-altitude-ft</property>
+                    </difference>
+                </abs>
+            </expression>
         </input>
-        <output>/autopilot/locks/altitude</output>
+        <output>/autopilot/internal/altitude-capture-distance-ft</output>
     </filter>
-    -->
 
+    <state-machine>
+        <name>Lateral Capture Logic</name>
+        <debug>false</debug>
+
+        <branch>/autopilot/internal/lateral-capture</branch>
+        <state>
+            <name>init</name>
+            <enter>
+                <command>property-assign</command>
+                <property>/autopilot/internal/altitude-armed</property>
+                <value type="string"></value>
+            </enter>
+        </state>
+        <state>
+            <name>armed</name>
+            <enter>
+                <command>property-assign</command>
+                <property>/autopilot/internal/altitude-armed</property>
+                <value>altitude-hold</value>
+            </enter>
+            <exit>
+                <command>property-assign</command>
+                <property>/autopilot/internal/altitude-armed</property>
+                <value type="string"></value>
+            </exit>
+        </state>
+        <state>
+            <name>captured</name>
+            <enter>
+                <command>property-assign</command>
+                <property>/autopilot/locks/altitude</property>
+                <value>altitude-hold</value>
+            </enter>
+        </state>
+
+        <!-- disable all logic when vertical mode deselected -->
+        <transition>
+            <name>disarm</name>
+            <source>captured</source>
+            <source>armed</source>
+            <target>init</target>
+            <condition>
+                <equals>
+                    <property>/autopilot/locks/altitude</property>
+                    <value type="string"></value>
+                </equals>
+            </condition>
+        </transition>
+
+        <!-- arm capture mode when vertical speed mode selected -->
+        <transition>
+            <name>arm</name>
+            <source>init</source>
+            <source>captured</source>
+            <target>armed</target>
+            <condition>
+                <equals>
+                    <property>/autopilot/locks/altitude</property>
+                    <value>vertical-speed-hold</value>
+                </equals>
+            </condition>
+        </transition>
+
+        <!-- enable capture mode and target current altitude when altitude hold selected -->
+        <transition>
+            <name>hold</name>
+            <source>armed</source>
+            <source>init</source>
+            <target>captured</target>
+            <condition>
+                <and>
+                    <equals>
+                        <property>/autopilot/locks/altitude</property>
+                        <value>altitude-hold</value>
+                    </equals>
+                    <equals>
+                        <property>/autopilot/internal/altitude-armed</property>
+                        <value>altitude-hold</value>
+                    </equals>
+                </and>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>/autopilot/internal/target-altitude-ft</property>
+                <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+            </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>/autopilot/settings/target-altitude-ft</property>
+                <property>/instrumentation/altimeter/indicated-altitude-ft</property>
+            </binding>
+        </transition>
+
+        <!-- enable capture mode when within 100ft of target altitude -->
+        <transition>
+            <name>capture</name>
+            <source>armed</source>
+            <target>captured</target>
+            <condition>
+                <less-than>
+                    <property>/autopilot/internal/altitude-capture-distance-ft</property>
+                    <value>100</value>
+                </less-than>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>/autopilot/internal/target-altitude-ft</property>
+                <property>/autopilot/settings/target-altitude-ft</property>
+            </binding>
+        </transition>
+    </state-machine>
+
+    <!-- base vertical modes -->
     <pid-controller>
         <name>Pitch hold</name>
         <debug>false</debug>
@@ -310,7 +400,7 @@
             <expression>
                 <product>
                     <difference>
-                        <property>/autopilot/settings/target-altitude-ft</property>
+                        <property>/autopilot/internal/target-altitude-ft</property>
                         <property>/instrumentation/altimeter/indicated-altitude-ft</property>
                     </difference>
                     <!-- attempt to capture altitude within 10 seconds -->
