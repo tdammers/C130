@@ -87,7 +87,7 @@
     <pointmass name="Payload">
         <weight unit="LBS">0</weight>
         <location name="POINTMASS" unit="IN">
-            <x> 500.40 </x>
+            <x> 600.40 </x>
             <y>   0.00 </y>
             <z>   0.00 </z>
         </location>
