@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <PropertyList>
     <!-- lateral modes -->
+    <!-- base lateral modes -->
     <filter>
         <name>Wing Leveler to Target Roll Deg</name>
         <condition>
@@ -19,11 +20,11 @@
         <name>CDI integrator</name>
         <debug>false</debug>
         <config>
-            <Kp>-0.05</Kp>
-            <Ki>-0.002</Ki>
+            <Kp>-4.0</Kp>
+            <Ki>-0.1</Ki>
         </config>
-        <!-- <input>/instrumentation/nav[0]/heading-needle-deflection-norm</input> -->
-        <input>/instrumentation/nav[0]/crosstrack-error-m</input>
+        <!-- <input>/instrumentation/nav[0]/crosstrack-error-m</input> -->
+        <input>/instrumentation/nav[0]/heading-needle-deflection</input>
         <output>/autopilot/internal/intercept-angle-deg</output>
         <min>-45.0</min>
         <max>45.0</max>
