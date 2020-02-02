@@ -310,10 +310,20 @@
             <source>app-captured</source>
             <target>armed</target>
             <condition>
-                <equals>
-                    <property>/autopilot/locks/altitude</property>
-                    <value>vertical-speed-hold</value>
-                </equals>
+                <or>
+                    <equals>
+                        <property>/autopilot/locks/altitude</property>
+                        <value>vertical-speed-hold</value>
+                    </equals>
+                    <equals>
+                        <property>/autopilot/locks/altitude</property>
+                        <value>pitch-hold</value>
+                    </equals>
+                    <equals>
+                        <property>/autopilot/locks/altitude</property>
+                        <value>ias-hold</value>
+                    </equals>
+                </or>
             </condition>
         </transition>
 
@@ -417,6 +427,10 @@
                     <equals>
                         <property>/autopilot/locks/altitude</property>
                         <value>altitude-hold</value>
+                    </equals>
+                    <equals>
+                        <property>/autopilot/locks/altitude</property>
+                        <value>ias-hold</value>
                     </equals>
                     <equals>
                         <property>/autopilot/locks/altitude</property>
@@ -553,6 +567,34 @@
         <config>
             <Kp>0.002</Kp>
             <Ki>0.004</Ki>
+            <u_min>-15</u_min>
+            <u_max>15</u_max>
+        </config>
+    </pi-simple-controller>
+
+    <pi-simple-controller>
+        <name>IAS to target pitch</name>
+        <debug>true</debug>
+        <enable>
+            <condition>
+                <equals>
+                    <property>/autopilot/locks/altitude</property>
+                    <value>ias-hold</value>
+                </equals>
+            </condition>
+        </enable>
+        <input>
+            <prop>/instrumentation/airspeed-indicator/indicated-speed-kt</prop>
+        </input>
+        <reference>
+            <prop>/autopilot/settings/target-speed-kt</prop>
+        </reference>
+        <output>
+            <prop>/autopilot/internal/target-pitch-deg</prop>
+        </output>
+        <config>
+            <Kp>-0.4</Kp>
+            <Ki>-0.2</Ki>
             <u_min>-15</u_min>
             <u_max>15</u_max>
         </config>
