@@ -209,11 +209,26 @@
         <output>/autopilot/internal/altitude-capture-distance-ft</output>
     </filter>
 
+    <filter>
+        <name>G/S capture diff</name>
+        <debug>false</debug>
+        <type>gain</type>
+        <gain>1</gain>
+        <input>
+            <expression>
+                <abs>
+                    <property>/instrumentation/nav[0]/gs-needle-deflection-norm</property>
+                </abs>
+            </expression>
+        </input>
+        <output>/autopilot/internal/gs-capture-diff</output>
+    </filter>
+
     <state-machine>
-        <name>Lateral Capture Logic</name>
+        <name>Vertical Capture Logic</name>
         <debug>false</debug>
 
-        <branch>/autopilot/internal/lateral-capture</branch>
+        <branch>/autopilot/internal/vertical-capture</branch>
         <state>
             <name>init</name>
             <enter>
@@ -243,12 +258,40 @@
                 <value>altitude-hold</value>
             </enter>
         </state>
+        <state>
+            <name>app-armed</name>
+            <enter>
+                <command>property-assign</command>
+                <property>/autopilot/internal/gs-captured</property>
+                <value type="bool">false</value>
+            </enter>
+            <exit>
+                <command>property-assign</command>
+                <property>/autopilot/internal/altitude-armed</property>
+                <value type="string"></value>
+            </exit>
+        </state>
+        <state>
+            <name>app-captured</name>
+            <enter>
+                <command>property-assign</command>
+                <property>/autopilot/internal/gs-captured</property>
+                <value type="bool">true</value>
+            </enter>
+            <exit>
+                <command>property-assign</command>
+                <property>/autopilot/internal/gs-captured</property>
+                <value type="bool">false</value>
+            </exit>
+        </state>
 
         <!-- disable all logic when vertical mode deselected -->
         <transition>
             <name>disarm</name>
             <source>captured</source>
             <source>armed</source>
+            <source>app-captured</source>
+            <source>app-armed</source>
             <target>init</target>
             <condition>
                 <equals>
@@ -263,6 +306,8 @@
             <name>arm</name>
             <source>init</source>
             <source>captured</source>
+            <source>app-armed</source>
+            <source>app-captured</source>
             <target>armed</target>
             <condition>
                 <equals>
@@ -272,10 +317,27 @@
             </condition>
         </transition>
 
+        <!-- arm app-capture mode when gs1 mode selected -->
+        <transition>
+            <name>arm</name>
+            <source>init</source>
+            <source>captured</source>
+            <source>armed</source>
+            <target>app-armed</target>
+            <condition>
+                <equals>
+                    <property>/autopilot/locks/altitude</property>
+                    <value>gs1-hold</value>
+                </equals>
+            </condition>
+        </transition>
+
         <!-- enable capture mode and target current altitude when altitude hold selected -->
         <transition>
             <name>hold</name>
             <source>armed</source>
+            <source>app-armed</source>
+            <source>app-captured</source>
             <source>init</source>
             <target>captured</target>
             <condition>
@@ -319,6 +381,22 @@
                 <property>/autopilot/settings/target-altitude-ft</property>
             </binding>
         </transition>
+
+        <!-- enable app-capture mode when within 100ft of target altitude -->
+        <transition>
+            <name>G/S capture</name>
+            <source>app-armed</source>
+            <target>app-captured</target>
+            <condition>
+                <and>
+                    <property>/instrumentation/nav[0]/gs-in-range</property>
+                    <less-than>
+                        <property>/autopilot/internal/gs-capture-diff</property>
+                        <value>0.01</value>
+                    </less-than>
+                </and>
+            </condition>
+        </transition>
     </state-machine>
 
     <!-- base vertical modes -->
@@ -339,6 +417,10 @@
                     <equals>
                         <property>/autopilot/locks/altitude</property>
                         <value>altitude-hold</value>
+                    </equals>
+                    <equals>
+                        <property>/autopilot/locks/altitude</property>
+                        <value>gs1-hold</value>
                     </equals>
                 </or>
             </condition>
@@ -388,6 +470,30 @@
     </filter>
 
     <filter>
+        <name>G/S vertical speed</name>
+        <type>gain</type>
+        <gain>1</gain>
+        <debug>false</debug>
+        <enable>
+            <prop>/autopilot/locks/altitude</prop>
+            <value>gs1-hold</value>
+        </enable>
+        <input>
+            <condition>
+                <property>/autopilot/internal/gs-captured</property>
+            </condition>
+            <property>/instrumentation/nav[0]/gs-rate-of-climb-fpm</property>
+        </input>
+        <input>
+            <condition>
+                <not><property>/autopilot/internal/gs-captured</property></not>
+            </condition>
+            <value>0</value>
+        </input>
+        <output>/autopilot/internal/vertical-speed-fpm</output>
+    </filter>
+
+    <filter>
         <name>Alt hold to vertical speed</name>
         <debug>false</debug>
         <enable>
@@ -426,6 +532,10 @@
                     <equals>
                         <property>/autopilot/locks/altitude</property>
                         <value>altitude-hold</value>
+                    </equals>
+                    <equals>
+                        <property>/autopilot/locks/altitude</property>
+                        <value>gs1-hold</value>
                     </equals>
                 </or>
             </condition>
